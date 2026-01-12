@@ -19,7 +19,8 @@ env/
 # MLflow
 mlruns/
 mlartifacts/
-
+mlflow.db
+01-mlflow/runs/
 # DVC
 .dvc/cache/
 
