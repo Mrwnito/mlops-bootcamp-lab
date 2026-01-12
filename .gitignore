@@ -1,0 +1,38 @@
+@"
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pkl
+*.joblib
+
+# Envs
+.venv/
+venv/
+env/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# DVC
+.dvc/cache/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Secrets
+.env
+.env.*
+"@ | Out-File -Encoding utf8 .gitignore
