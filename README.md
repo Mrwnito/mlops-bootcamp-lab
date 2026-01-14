@@ -5,3 +5,5 @@ It is organized by modules (MLflow, DVC, Docker, Airflow, CI/CD) and grows incre
 
 ## Structure
 - 01-mlflow/
+- 02-DeepL_Mlflow/
+- 03-DVC&Dagshub/
