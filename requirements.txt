@@ -1,4 +1,7 @@
-mlflow
+mlflow==2.16.2
 scikit-learn
 pandas
 numpy
+keras
+tensorflow
+hyperopt
