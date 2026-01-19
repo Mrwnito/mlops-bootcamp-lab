@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:////mlflow_db/mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlruns
+    volumes:
+      - mlruns:/mlruns
+      - mlflow_db:/mlflow_db
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:////mlflow_db/mlflow.db
+      --default-artifact-root /mlruns
+
+  trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    container_name: trainer
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_EXPERIMENT_NAME=diabetes-regression
+    volumes:
+      - mlruns:/mlruns
+    depends_on:
+      - mlflow
+    command: ["python", "train.py"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: ml-api
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_EXPERIMENT_NAME=diabetes-regression
+    ports:
+      - "8000:8000"
+    volumes:
+      - mlruns:/mlruns
+    depends_on:
+      - mlflow
+      - trainer
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+volumes:
+  mlruns:
+  mlflow_db:

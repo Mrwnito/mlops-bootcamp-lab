@@ -1,0 +1,20 @@
+# FastAPI inference image that pulls the latest run from MLflow
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir \
+    mlflow==2.9.2 \
+    scikit-learn==1.3.2 \
+    fastapi==0.109.0 \
+    "uvicorn[standard]"==0.25.0 \
+    pydantic==2.5.3
+
+COPY app.py .
+
+ENV MLFLOW_TRACKING_URI=http://mlflow:5000
+ENV MLFLOW_EXPERIMENT_NAME=diabetes-regression
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
