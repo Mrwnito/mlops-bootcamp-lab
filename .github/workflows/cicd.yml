@@ -47,9 +47,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and push Docker image
+      id: build-and-push
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: ./07-CI_CD_GithubActions
+        file: ./07-CI_CD_GithubActions/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
     
