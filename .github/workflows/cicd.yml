@@ -27,7 +27,7 @@ jobs:
         pip install flask pytest
 
     - name: Run tests
-      run: pytest tests/
+      run: pytest 07-CI_CD_GithubActions/tests/
 
   build-and-push:
     needs: build-and-test
